@@ -1,9 +1,7 @@
 import "./style.css";
 
 document.querySelector("#app").innerHTML = `
-    <div id="main">
       <div class="calender" id="grid"></div>
-    </div>
 `;
 
 const MONTHS = [
