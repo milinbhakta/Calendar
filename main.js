@@ -1,9 +1,5 @@
 import "./style.css";
 
-document.querySelector("#app").innerHTML = `
-      <div class="calender" id="grid"></div>
-`;
-
 const MONTHS = [
   "January",
   "February",
@@ -27,9 +23,10 @@ let currentYear = today.getFullYear();
 
 const gridDiv = document.getElementById("grid");
 
-// Declare Cursor
-let cur = document.createElement("div");
-cur.setAttribute("class", "cur");
+// Cursor
+const cur = document.createElement("div");
+cur.setAttribute("id", "cur");
+cur.classList.add('cur');
 
 renderCalendar(currentYear, currentMonth);
 
@@ -111,13 +108,21 @@ function renderCalendar(year, month) {
     }
   }
 
-  // Cursor append
+  // Cursor
   gridDiv.append(cur);
+  const gridDivRect = gridDiv.getBoundingClientRect();
   gridDiv.addEventListener("mousemove", (ev) => {
-    let x = ev.clientX - 125;
-    let y = ev.clientY - 125;
-    cur.style.left = x + "px";
-    cur.style.top = y + "px";
+    if (ev.currentTarget === gridDiv) {
+      cur.style.opacity = "1";
+      let x = ev.clientX - 100 - gridDivRect.left;
+      let y = ev.clientY - 100 - gridDivRect.top;
+      cur.style.left = x + "px";
+      cur.style.top = y + "px";
+    }
+  });
+  
+  gridDiv.addEventListener("mouseleave", () => {
+    cur.style.opacity = "0";
   });
 }
 
